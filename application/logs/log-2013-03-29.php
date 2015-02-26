@@ -1,0 +1,59 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+ERROR - 2013-03-29 00:16:32 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 00:48:04 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 00:51:56 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 01:09:32 --> 404 Page Not Found --> public
+ERROR - 2013-03-29 01:09:41 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 01:19:10 --> 404 Page Not Found --> public
+ERROR - 2013-03-29 01:20:08 --> 404 Page Not Found --> public
+ERROR - 2013-03-29 01:38:09 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 02:18:12 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 02:31:42 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 02:36:36 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 02:48:19 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 03:29:11 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 03:30:58 --> 404 Page Not Found --> public_html
+ERROR - 2013-03-29 04:05:27 --> 404 Page Not Found --> products.php
+ERROR - 2013-03-29 04:42:20 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 05:06:21 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 06:35:35 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 07:33:23 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 07:35:30 --> 404 Page Not Found --> updates
+ERROR - 2013-03-29 08:36:55 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 08:43:28 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 08:44:19 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 09:10:46 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 09:29:14 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 09:29:16 --> 404 Page Not Found --> public
+ERROR - 2013-03-29 09:31:17 --> 404 Page Not Found --> public
+ERROR - 2013-03-29 09:53:13 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 10:30:28 --> 404 Page Not Found --> manufacturing
+ERROR - 2013-03-29 10:32:28 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 10:43:05 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 11:41:44 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 11:43:34 --> 404 Page Not Found --> products.php
+ERROR - 2013-03-29 12:59:12 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 13:12:31 --> Severity: Warning  --> unlink(./captcha/fonts) [<a href='function.unlink'>function.unlink</a>]: Is a directory /home/chaset7/public_html/application/helpers/spam_helper.php 108
+ERROR - 2013-03-29 13:23:31 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 13:55:50 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 13:57:33 --> 404 Page Not Found --> products.php
+ERROR - 2013-03-29 14:31:02 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 14:51:38 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 15:12:13 --> Severity: Warning  --> unlink(./captcha/fonts) [<a href='function.unlink'>function.unlink</a>]: Is a directory /home/chaset7/public_html/application/helpers/spam_helper.php 108
+ERROR - 2013-03-29 15:32:42 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 15:37:50 --> Severity: Warning  --> unlink(./captcha/fonts) [<a href='function.unlink'>function.unlink</a>]: Is a directory /home/chaset7/public_html/application/helpers/spam_helper.php 108
+ERROR - 2013-03-29 15:53:27 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 16:47:05 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 17:06:05 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 17:16:17 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 17:21:39 --> 404 Page Not Found --> contactus
+ERROR - 2013-03-29 18:32:03 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 18:32:12 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 20:48:45 --> Severity: Warning  --> unlink(./captcha/fonts) [<a href='function.unlink'>function.unlink</a>]: Is a directory /home/chaset7/public_html/application/helpers/spam_helper.php 108
+ERROR - 2013-03-29 21:03:01 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 21:43:31 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 21:45:32 --> 404 Page Not Found --> company
+ERROR - 2013-03-29 22:32:48 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 22:39:47 --> 404 Page Not Found --> robots.txt
+ERROR - 2013-03-29 23:06:59 --> 404 Page Not Found --> movie.swf

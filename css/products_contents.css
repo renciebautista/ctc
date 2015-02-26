@@ -1,0 +1,138 @@
+@charset "utf-8";
+/* CSS Document */
+
+div#industryContainer .title {
+background-color:#0fa6f8;
+background-image: url('/images/site/bling.png');
+background-position:right;
+background-repeat:no-repeat;
+border-bottom:1px solid #c9c9c9;
+padding: 5px 0px 5px 7px;
+color:#ffffff;
+font-size:14px;
+font-weight:bold;
+}
+
+div#industryContainer #body {
+margin:10px 10px 5px 10px;
+}
+
+div#industryContainer #body img {
+float:left;
+margin:3px 15px 0px 0px;
+}
+
+p#containerTitle {
+font-weight:bold;
+font-size:15px;
+font-variant:small-caps;
+margin:0px 0px 3px 0px;
+padding:3px 0px 3px 4px;
+text-align:left;
+color:#ffffff;
+background-color:#0fa6f8;
+border-bottom:2px solid #d2d2d2;
+background-repeat:no-repeat;
+background-position:right;
+background-image : url("/images/site/bling.png");
+}
+
+div#background {
+background-color:#f3f3f3;
+}
+
+p#containerFooter {
+border-bottom:2px solid #0fa6f8;
+}
+
+table#contents td {
+vertical-align:top;
+}
+
+table#contents td.list {
+width:100%;
+vertical-align:top;
+}
+
+table#contents td.spacer {
+padding-right:5px;
+height:5px;
+}
+
+table#contents td.list ul {
+list-style-type:decimal;
+margin:0px 10px 0px 25px;
+margin-left:25px;
+}
+
+table#contents td.list ul li {
+border-bottom:1px dotted #d2d2d2;
+text-indent:0px;
+margin:2px 0px 0px 0px;
+font-size:11px;
+}
+
+table#contents td.idealfor div.border {
+width:160px;
+border:#d2d2d2 1px solid;
+padding-bottom:5px;
+}
+
+table#contents td.idealfor div.title {
+background-color:#0fa6f8;
+/*background-image: url('/public/image/bling.png');*/
+background-position:right;
+background-repeat:no-repeat;
+border-bottom:1px solid #c9c9c9;
+padding: 3px 8px 3px 7px;
+font-size:14px;
+font-weight:bold;
+color:#ffffff;
+text-align:left;
+}
+
+table#contents td.idealfor ul {
+list-style-type:decimal;
+margin:0px 10px 0px 25px;
+margin-left:25px;
+}
+
+table#contents td.idealfor ul li {
+border-bottom:1px dotted #d2d2d2;
+text-indent:0px;
+margin:2px 0px 0px 0px;
+font-size:11px;
+}
+div#leftPanel
+{
+float: left;
+border-right: 1px solid #000000;
+width: 670px;
+text-align:center;
+background: none;
+}
+#inquiry
+{
+    text-align: right;
+}
+#inquiry a
+{
+    color: #FFFFFF;
+    margin: 5px;
+    padding: 5px;
+    text-decoration: none;
+    font-size:12px;
+    background-color: #0FA6F8;
+    font-variant: small-caps;
+}
+#inquiry a:hover
+{
+    color: #FFFFFF;
+    margin: 5px;
+    padding: 5px;
+    text-decoration: none;
+    font-size:12px;
+    background-color: green;
+    font-variant: small-caps;
+
+}

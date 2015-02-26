@@ -1,0 +1,24 @@
+#item_list{background-color: #EEEEEE; padding: 10px;}
+#item_list ul {list-style: none; margin-left: 0px;}
+#list{min-height: 130px;  border-bottom: 1px solid rgba(0, 0, 0, 0.2);margin-top: 10px;}
+#list img{float: left;}
+#list_details{margin-left: 125px;}
+#list_details h2 {font-size: 18px; margin: 0px;padding: 0px;line-height: 25px;}
+#list_details p {margin-top: 10px;}
+
+.left{float:right;}
+form {margin-bottom: 0px;}
+
+#file {display: none;}
+   
+.dummyfile input[type="text"] {width: 120px;display: inline;}
+
+.legend{border-bottom: 1px solid #BAB9B9;margin-top: 0px;}
+
+.space {margin-right:20px;}
+
+.noti{margin-left: 20px;font-style: italic;color: #FF0000;;}
+
+.ideal {float: left;list-style: none outside none;margin-right: 30px;}
+
+.ideal input[type="checkbox"] { margin: 5px;}

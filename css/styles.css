@@ -1,0 +1,13 @@
+#example_1_container {
+    width:655px;
+    height:350px;
+	text-align:left;
+	margin-right:1%;
+	margin-bottom:1%;
+}
+
+#example_1_container .easy_slides_caption {
+    width:655px;
+    height:50px;
+    padding: 10px 0 0 10px;
+}

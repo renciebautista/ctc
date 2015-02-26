@@ -1,0 +1,48 @@
+.block{display: block;padding:2px;}
+
+#leftContainer .group{width:100%; float: left;margin-right: 5px; margin-bottom: 5px;min-height: 10px;}
+#leftContainer .group.green{border: 1px solid #B6D886;}
+#leftContainer .group.red{border: 1px solid #F3B6AE;}
+#leftContainer .group.blue{border: 1px solid #9FD1EE;}
+#leftContainer .group.violet{border: 1px solid #C6AFDC;}
+#leftContainer .group.yellow{border: 1px solid #06DCFB;}
+#leftContainer .group ul{list-style: none;}
+#leftContainer .group ul li{line-height: 2em;}
+#leftContainer :last-child{margin-right:0px;}
+
+#leftContainer .title h2{font-size: 14px;font-weight: bold;padding: 10px;text-transform: uppercase;color: #FFF;text-align: center;}
+
+#leftContainer .title.green{background-color: #508B00;}
+#leftContainer .title.red{background-color: #DD4B39;}
+#leftContainer .title.blue{background-color: #0B418B;}
+#leftContainer .title.violet{background-color: #6F4696;}
+#leftContainer .title.yellow{background-color: #06DCFB;}
+
+#leftContainer .group.red ul li a, .group.green ul li a, .group.blue ul li a, .group.violet ul li a, .group.yellow ul li a {display: block;float: left;width: 98%;  padding-left: 15px;}
+#leftContainer .group.green ul li a:hover{background-color: #B6D886;}
+#leftContainer .group.red ul li a:hover{background-color: #F3B6AE;}
+#leftContainer .group.blue ul li a:hover{background-color:  #9FD1EE;}
+#leftContainer .group.violet ul li a:hover{background-color: #C6AFDC;}
+#leftContainer .group.yellow ul li a:hover{background-color: #CEF0FF;}
+
+.clear_both{clear: both;border: 1px solid #2DABEF;padding: 10px;margin-bottom: 10px;}
+.clear_both_2{clear: both;border: 1px solid #FFA900;padding: 10px;margin-bottom: 10px;}
+.clear_both_2 a{font-size: 14px;font-weight: bold; text-transform: uppercase; color: #FFA900;}
+.clear_both a{font-size: 14px;font-weight: bold; text-transform: uppercase; color: #2DABEF;}
+
+.clear_both_2 a:hover{color: #FFA900;}
+
+.c_con{color: #FFFFFF;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+    text-transform: uppercase;background-color: #508B00;
+    margin-bottom: 10px;
+    }
+.c_con a{color: #FFF;}
+.c_con a:hover{color: #B6D886;text-decoration: none;}
+
+/*#contact_us a{
+	font-size: 12px;
+}*/

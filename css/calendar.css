@@ -1,0 +1,50 @@
+
+			.calendar table {
+				border: none;
+				background-color: #a7aab3;
+				
+			}
+			.calendar a {
+				text-decoration: none;
+				font-size: 11px;
+			}
+			.calendar td {
+				border-right: 1px solid #fff; 
+				border-top: 1px solid #fff; 
+				vertical-align: top;
+				background: #f0f0f0 url(/img/admin/cal-cell-bg.gif) repeat-x;
+				padding: 0;
+				height: 90px;
+				
+			}
+			
+			.calendar th {
+				font-size: 18px;
+				font-weight: bold;
+				text-align: center;
+				padding: 10px;
+			}
+			.calendar th a{
+				font-size: 25px;
+				color: #555;
+			}
+			.day {
+				float: left;
+				padding: 5px;
+				background: #ddd;
+				font-weight: bold;
+				margin-right: 5px;
+				margin-top: -1px;
+				border-right: 1px solid #fff; 
+			}
+			.current {
+				background: #edd687;
+			}
+			
+			.calendar-new-link a {
+				color: #bbb;
+				font-weight: bold;
+			}
+			.calendar-new-link a:hover{
+				color: #000;
+			}

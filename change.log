@@ -1,0 +1,23 @@
+12-04-2013
+	- fix error on uploading files in all request
+11-25-2013
+	- fix filters for pending request emails
+--deployed
+10-19-2013
+	- add user module
+	- add role authentication
+10-18-2013
+	- add module to add pending inquiry
+	- add option to send pending information on email sent backto client
+	- add module to add blacklisted contacts
+	- add option not to reply to blacklisted contact
+
+9-14-2013
+	- add missing fields on email templates
+
+8-14-2013
+	- add date_created field on careers table
+	- modify control panel interface
+
+6-11-2013
+	- modify email template in add THIS IS A SYSTEM GENEREATED EMAIL DO NOT REPLY TO THIS EMAIL

@@ -1,0 +1,53 @@
+#basket{
+	border-right:1px solid #BBBBBB;
+	border-left:1px solid #BBBBBB;
+	min-height: 50px;
+}
+#basket h2 {
+	padding:8px;
+	text-align:center;
+	font-variant: small-caps;
+	font-size: 15px;
+	color:#FFFFFF;
+	border-bottom:1px solid #BBBBBB;
+	background-color: #0FA6F8;
+    background-image: url("/images/site/bling1.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+	
+}
+.basket {
+    background: url("../images/basket.png") no-repeat scroll left center transparent;
+    padding: 0 0 0 20px !important;
+}
+.clear {
+    background: url("../images/clear.png") no-repeat scroll left center transparent;
+    padding: 0 0 0 20px !important;
+}
+.send {
+    background: url("../images/send.png") no-repeat scroll left center transparent;
+    padding: 0 0 0 20px !important;
+}
+
+#basket ul {
+	list-style-position: outside;
+    list-style-type: none;
+	padding:5px;
+}
+#basket ul li{
+	margin-bottom:5px;
+}
+#basket a{
+	margin-bottom:5px;
+}
+.delete{
+    background: url("../images/delete.png") no-repeat scroll left center transparent;
+    padding: 0 0 0 20px !important;
+}
+#reset{
+	height:20px;
+	border-bottom:1px solid #BBBBBB;
+	border-right:1px solid #BBBBBB;
+	border-left:1px solid #BBBBBB;
+	margin-bottom:5px;
+}

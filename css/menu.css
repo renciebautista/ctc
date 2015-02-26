@@ -1,0 +1,147 @@
+#navigation
+{
+	margin:0;
+	padding: 0;
+	clear:both;
+	width:920px;
+    height:25px;
+	background: #d6eaf8 url('/public/image/dropdown-bg.png') repeat-x left top;
+}
+
+
+ul.nav-main,
+ul.nav-main li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+    
+}
+
+
+ul.nav-main {
+	position: relative;
+	z-index: 597;
+}
+
+ul.nav-main li:hover > ul {
+	visibility: visible;
+}
+
+
+ul.nav-main li.hover,
+ul.nav-main li:hover {
+	position: relative;
+	z-index: 599;
+	cursor: pointer;
+	background: url('/public/image/dropdown-bg-hover.gif') repeat-x left top;
+}
+
+
+
+ul.nav-main li {
+	float:left;
+	display:block;
+	background: url('/public/image/seperator.png') no-repeat right center;
+    padding: 4px 0;
+}
+
+ul.nav-main li a {
+	/*display:block;
+	padding: 16px 16px 0 16px;
+	height: 35px;
+	color: #FFFFFF;
+	font: 14px Arial, Helvetica, sans-serif;
+	text-decoration:none;*/
+    border-right: 1px;
+    color: #FFFFFF;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 0.01em;
+    padding: 4px 8px;
+    text-decoration: none;
+}
+
+ul.nav-main li a:hover {
+	color: #0FA6F8;
+}
+
+
+
+ul.nav-main *.list {
+	padding-right: 22px;
+	background: url('/public/image/list_divider.png') no-repeat right top;
+}
+
+
+
+ul.nav-sub {
+	visibility: hidden;
+	position: absolute;
+	top: 25px;
+	left: 0;
+	z-index: 598;
+	background: #353535 url('/public/image/dropdown-list-bg.gif') repeat-x left top;
+	border-right: 1px solid #000;
+	border-bottom: 1px solid #000;
+	border-left: 1px solid #000;
+}
+
+
+ul.nav-sub li {
+	list-style:none;
+	display:block;
+	padding: 0;
+	height: 27px;
+	float: none;
+	width:145px;
+	border-bottom: 1px solid #5a5a5a;
+	background: none;
+}
+
+ul.nav-sub li a {
+	list-style:none;
+	display:block;
+	padding: 6px 5px 6px 5px;
+	height: 15px;
+	float: none;
+	width:145px;
+	background: none;
+	font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 0.01em;
+}
+ul.nav-sub2 {
+	visibility: hidden;
+	position: absolute;
+	top: 25px;
+	left: 0;
+	z-index: 598;
+	background: #353535 url('/public/image/dropdown-list-bg.gif') repeat-x left top;
+	border-right: 1px solid #000;
+	border-bottom: 1px solid #000;
+	border-left: 1px solid #000;
+}
+ul.nav-sub2 li {
+	list-style:none;
+	display:block;
+	padding: 0;
+	height: 27px;
+	float: none;
+	width:300px;
+	border-bottom: 1px solid #5a5a5a;
+	background: none;
+}
+
+ul.nav-sub2 li a {
+	list-style:none;
+	display:block;
+	padding: 6px 5px 6px 5px;
+	height: 15px;
+	float: none;
+	width:300px;
+	background: none;
+	font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 0.01em;
+}
+

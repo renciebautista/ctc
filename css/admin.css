@@ -1,0 +1,270 @@
+body {
+    background-color: #EBEBEB;
+    color: #464646;
+    font-family: Lucida Grande,Arial;
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+.wrapper {
+    margin: 0 auto;
+    width: 1000px;
+}
+.content {
+    background-color: #FFFFFF;
+    border: 1px solid #BAB9B9;
+    /*padding-bottom: 25px;*/
+	padding: 0 20px 20px 20px;
+    text-align: center;
+}
+.in {
+    /*margin: 25px auto;*/
+    text-align: left;
+    /*width: 100%;*/
+	margin-top: 20px;
+}
+
+.line {
+    border-top: 1px solid #BAB9B9;
+    height: 1px;
+}
+h1, h2, h3 {
+    margin: 0;
+    padding: 0;
+}
+h1 {
+    font-size: 32px;
+}
+h2 {
+    font-family: Georgia;
+    font-size: 24px;
+    font-style: italic;
+}
+.author p {
+    margin: 0;
+    padding: 0;
+}
+.forms {
+    line-height: 2em;
+}
+
+a:link, a:visited {
+    color: #30A4B1;
+    text-decoration: none;
+}
+a:hover {
+    color: #F7941D;
+}
+.v_line {
+    color: #999999;
+    padding: 0 5px;
+}
+.logo {
+    float: left;
+    margin: 25px 0;
+}
+.txt_right {
+    float: right;
+    margin-top: 15px;
+	padding-right: 5px;
+}
+
+.box {
+    border: 1px solid #BAB9B9;
+    color: #707070;
+    font-size: 14px;
+    padding: 10px;
+	width: 97.5%;
+
+
+}
+.box_small {
+    border: 1px solid #BAB9B9;
+    color: #707070;
+    font-size: 14px;
+    padding: 10px;
+    width: 100px;
+}
+.box2 {
+    border: 1px solid #BAB9B9;
+    color: #707070;
+    font-size: 14px;
+    padding: 10px;
+    width: 400px;
+}
+.com_btn {
+    background-color: #F7941D;
+    border: 0 none;
+    color: #FFFFFF;
+    font-size: 14px;
+    margin: 0;
+    padding: 10px 20px;
+}
+.check {
+    background-color: #F7F7F7;
+    border: 1px solid #BAB9B9;
+    margin: 25px;
+    padding: 10px 15px;
+    text-align: left;
+}
+.good {
+}
+.icon {
+    float: left;
+    padding-right: 8px;
+}
+.bad {
+}
+.navigation {
+    background-color: #464646;
+    float: left;
+    margin-bottom: 10px;
+    position: relative;
+    width: 100%;
+}
+.navigation ul {
+    margin: 0;
+    padding: 0;
+}
+.navigation ul li {
+    float: left;
+    font-weight: normal;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+.navigation li a {
+    color: #FFFFFF;
+    float: left;
+    font-size: 13px;
+    margin: 0;
+    padding: 10px 10px;
+    text-decoration: none;
+}
+.navigation li .active {
+    background-color: #F7941D;
+    color: #FFFFFF;
+}
+.navigation li a:hover {
+    background-color: #30A4B1;
+    color: #FFFFFF;
+}
+.clear {
+    clear: both;
+}
+#searchform {
+    position: absolute;
+    right: 15px;
+    top: 13px;
+}
+
+.search_box {
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    color: #999999;
+    font-size: 13px;
+    margin: 0;
+    padding: 6px;
+}
+.search_btn {
+    background-color: #F7941D;
+    border: 0 none;
+    color: #FFFFFF;
+    font-size: 13px;
+    height: 30px;
+    margin: 0 0 0 5px;
+    padding: 6px;
+}
+.footer {
+    margin-bottom: 40px;
+    text-align: right;
+}
+td {
+    padding: 12px;
+    text-align: left;
+}
+.gray td {
+    background-color: #F7F7F7;
+}
+.table_main {
+    border-left: 1px solid #BAB9B9;
+    border-right: 1px solid #BAB9B9;
+    border-top: 1px solid #BAB9B9;
+	width: 100%;
+}
+.table_main .delete {
+   /* background: url("images/x2.gif") no-repeat scroll left center transparent;*/
+    padding-left: 12px;
+}
+tr td {
+    border-bottom: 1px solid #BAB9B9;
+}
+
+
+#searchform1 {
+    right: 15px;
+    top: 13px;
+    margin-bottom:10px;
+}
+.add{
+    margin-top:8px;
+    float:left;
+
+}
+.add a{
+    background-color: #F7941D;
+    border: 0 none;
+    color: #FFFFFF;
+    font-size: 13px;
+    height: 100px;
+    padding: 8px;
+}
+.back{
+    background-color: #F7941D;
+    border: 0 none;
+    font-size: 14px;
+    margin: 0;
+    padding: 11.3px 20px;
+
+}
+#_back{
+    color:#FFFFFF;
+}
+
+input.file{
+    border: 1px solid #BAB9B9;
+    color: #707070;
+    font-size: 14px;
+    padding: 10px;
+    width: 600px;
+}
+.message_ok{
+    color:#009933;
+}
+.message_error{
+    color:#FF0000;
+}
+.wedo{
+    border: 1px solid #BAB9B9;
+}
+.box1 {
+    border: 1px solid #BAB9B9;
+    color: #707070;
+    font-size: 14px;
+    padding: 4.5px;
+    width: 200px;
+}
+#left{
+    width: 630px;
+    float:left;
+}
+#right{
+    float:left;
+    width: 200px;
+}
+.ideal{
+    float: left;
+	list-style: none;
+    margin-right:30px;
+}

@@ -3881,6 +3881,107 @@ class Contact extends CI_Controller {
 			}
 		}
 	}
+//-----------------------------------------------------------
+	public function billing_request(){
+		if(!$_POST){
+			$this->_get_billing_request();
+		}else{
+			$this->_post_billing_request();
+		}
+	}
+
+	private function _get_billing_request(){
+		$data = $this->default;
+
+		$cap = $this->_generateCaptcha();
+		$data['captcha']= $cap['image'];
+		$data['word']= $cap['word'];
+		$data['payment_for'] = array(array('id' => 1, 'desc' => 'Collection'),
+			array('id' => 2, 'desc' => 'Services'));
+		$data['type'] = array(array('id' => 1, 'desc' => 'Cash'),
+			array('id' => 2, 'desc' => 'Check'));
+
+		$data['childpage'] = 'contact/billing_request';
+		$this->load->view('masterpage',$data);
+	}
+
+	private function _post_billing_request(){
+
+		$this->load->library('form_validation');
+		$config = array(
+			array('field' =>'company','label' =>'Company Name','rules' =>'trim|required'),
+			array('field' =>'store','label' =>'Branch Name','rules' =>'trim|required'),
+			array('field' =>'so','label' =>'Sales Order','rules' =>'trim|required'),
+			array('field' =>'payment_for','label' =>'Payment for','rules' =>'trim|required|is_natural_no_zero'),
+			array('field' =>'type','label' =>'Store Name','rules' =>'trim|required|is_natural_no_zero'),
+			array('field' =>'service_by','label' =>'Service By','rules' =>''),
+			array('field' =>'expense','label' =>'Expenses','rules' =>'trim|required'),
+			array('field' =>'requestor','label' =>'Requested By','rules' =>'trim|required'),
+			array('field' =>'email','label' =>'Email Address','rules' =>'trim|required|valid_email'),
+			array('field' =>'captcha','label' =>'Security','rules' =>'required|callback_captcha_check')
+		);
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_message('required', 'This field is required.');
+		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+
+		if($this->form_validation->run() == FALSE){
+			$this->_get_billing_request();
+		}
+		else
+		{
+			$data['company'] = $this->input->post('company');
+			$data['store'] = $this->input->post('store');
+			$data['so'] = $this->input->post('so');
+			$data['payment_for'] = $this->input->post('payment_for');
+			$data['type'] = $this->input->post('type');
+			$data['service_by'] = $this->input->post('service_by');
+			$data['expense'] = $this->input->post('expense');
+			$data['date_created'] = date_format(date_create(date("Y-m-d His")),'l, F j, Y H:i:s a');
+			$data['date_inquiry'] = date('l jS \of F Y h:i:s A');
+			$data['requestor'] = $this->input->post('requestor');
+			$data['email'] = $this->input->post('email');
+			$data['ip_address'] = $this->input->ip_address();
+			$data['info_type'] ="Billing Request";
+
+			//Save information details
+			$this->Clients_model->add('','','',$data['email'],
+				$data['company'],$data['store'],'');
+
+			$reply_msg = $this->_checkDay('email_tpl_client',$data);
+			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+
+			switch (ENVIRONMENT)
+			{
+				case 'development':
+					print($reply_msg);
+					break;
+				case 'testing':
+					$chase_mail = $this->Subgroup_model->get_record_by_slug('billing_request');
+
+					if($this->_send_mail('billing_request', $data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],'')){
+						$this->M_Logs->save($chase_mail['id']);
+						$this->_success();
+					}else{
+						$this->_fails();
+					}
+					break;
+				case 'production':
+					$chase_mail = $this->Subgroup_model->get_record_by_slug('billing_request');
+
+					if($this->_send_mail('billing_request', $data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],'')){
+						$this->M_Logs->save($chase_mail['id']);
+						$this->_success();
+					}else{
+						$this->_fails();
+					}
+					break;
+				default:
+					exit('The application environment is not set correctly.');
+			}
+		}
+	}
+
+
 }
 
 /* End of file contact.php */

@@ -126,21 +126,23 @@
 											<?php else: ?>
 											<?php endif; ?>
 
+											<?php if(isset($c_person)): ?>
 											<tr>
 												<td class="header">Contact Person</td>
 											</tr>
-
 											<tr>
 												<td class="info"><?php echo $c_person; ?></td>
 											</tr>
+											<?php endif ?>
 
+											<?php if(isset($c_number)): ?>
 											<tr>
 												<td class="header">Contact Number</td>
 											</tr>
-
 											<tr>
 												<td class="info"><?php echo $c_number; ?></td>
 											</tr>
+											<?php endif ?>
 
 											<?php if(isset($landline)): ?>
 
@@ -412,6 +414,74 @@
 											
 											
 
+											<!-- billing -->
+											<?php if(isset($payment_for)): ?>
+											<tr>
+												<td class="header">Payment for</td>
+											</tr>
+											<tr>
+												<td class="info">
+													<?php 
+														if($payment_for == 1){
+															echo 'Collection';
+														}else{
+															echo 'Services';
+														}
+													?>
+												</td>
+											</tr>
+											<?php endif; ?>
+
+											<?php if(isset($type)): ?>
+											<tr>
+												<td class="header">Payment Type</td>
+											</tr>
+											<tr>
+												<td class="info">
+													<?php 
+														if($type == 1){
+															echo 'Cash';
+														}else{
+															echo 'Check';
+														}
+													?>
+												</td>
+											</tr>
+											<?php endif; ?>
+
+											<?php if(isset($service_by)): ?>
+											<tr>
+												<td class="header">Service by (Technician Name)</td>
+											</tr>
+											<tr>
+												<td class="info">
+													<?php echo $service_by; ?>
+												</td>
+											</tr>
+											<?php endif; ?>
+
+											<?php if(isset($expense)): ?>
+											<tr>
+												<td class="header">Transpo/Meal/Lodging to be liquidated onsite</td>
+											</tr>
+											<tr>
+												<td class="info">
+													<?php echo strtoupper($expense); ?>
+												</td>
+											</tr>
+											<?php endif; ?>
+
+											<?php if(isset($requestor)): ?>
+											<tr>
+												<td class="header">Requested By</td>
+											</tr>
+											<tr>
+												<td class="info">
+													<?php echo $requestor; ?>
+												</td>
+											</tr>
+											<?php endif; ?>
+											
 											<tr>
 												<td class="header">&nbsp;</td>
 											</tr>

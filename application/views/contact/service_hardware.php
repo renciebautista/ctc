@@ -10,7 +10,7 @@
 		<?php $attributes = array('id' => 'form');
 		echo form_open_multipart('', $attributes); ?>
 		
-		<?php $this->load->view('shared/client_info'); ?>
+		<?php $this->load->view('shared/client_info_2'); ?>
 
 		<br>
 		<div>
@@ -61,6 +61,9 @@ $(document).ready(function() {
 		errorElement: "span", 
 		//set the rules for the field names
 		rules: { 
+			requested_by: { required: true },
+			r_number: { required: true },
+			remail: { required: true,email: true },
 			c_number: { required: true },
 			c_person: { required: true },
 			email: { required: true,email: true },
@@ -81,6 +84,6 @@ $(document).ready(function() {
 		}
 	});
 
-	$("#c_number").numericonly();
+	$("#c_number,#r_number").numericonly();
 });
 </script>

@@ -10,7 +10,7 @@
 		<?php $attributes = array('id' => 'form');
 		echo form_open_multipart('', $attributes); ?>
 		
-		<?php $this->load->view('shared/client_info'); ?>
+		<?php $this->load->view('shared/client_info_2'); ?>
 
 		<br>
 		<div>

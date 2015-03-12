@@ -95,6 +95,35 @@
 												<td>&nbsp;</td>
 											</tr>
 
+											<?php if(isset($requested_by)): ?>
+											<tr>
+												<td bgcolor="#E3E3E3" class="header">Requestor Information</td>
+											</tr>
+											<tr>
+												<td class="header">Requested By</td>
+											</tr>
+											<tr>
+												<td class="info"><?php echo $requested_by;?></td>
+											</tr>
+
+											<tr>
+												<td class="header">Contact Number</td>
+											</tr>
+											<tr>
+												<td class="info"><?php echo $r_number;?></td>
+											</tr>
+
+											<tr>
+												<td class="header">Email Address</td>
+											</tr>
+											<tr>
+												<td class="info"><?php echo $remail;?></td>
+											</tr>
+
+
+											<?php endif; ?>
+											
+
 											<tr>
 												<td bgcolor="#E3E3E3" class="header">Client Information</td>
 											</tr>

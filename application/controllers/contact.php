@@ -1273,7 +1273,6 @@ class Contact extends CI_Controller {
 //-----------------------------------------------------------
 	public function service_request(){
 		if(!$_POST){
-			//$this->_post_service_request();
 			$this->_get_service_request();
 		}else{
 			$this->_post_service_request();
@@ -1295,6 +1294,9 @@ class Contact extends CI_Controller {
 	private function _post_service_request(){
 		$this->load->library('form_validation');
 		$config = array(
+			array('field' =>'requested_by','label' =>'Requested By','rules' =>'trim|required'),
+			array('field' =>'r_number','label' =>'Requestor Number','rules' =>'trim|required'),
+			array('field' =>'remail','label' =>'Requestor Email Address','rules' =>'trim|required|valid_email'),
 			array('field' =>'c_number','label' =>'Contact Number','rules' =>'trim|required'),
 			array('field' =>'c_person','label' =>'ContactPerson','rules' =>'trim|required'),
 			array('field' =>'email','label' =>'Email Address','rules' =>'trim|required|valid_email'),
@@ -1314,6 +1316,10 @@ class Contact extends CI_Controller {
 		}
 		else
 		{
+			$data['requested_by'] = $this->input->post('requested_by');
+			$data['r_number'] = $this->input->post('r_number');
+			$data['remail'] = $this->input->post('remail');
+
 			$data['c_number'] = $this->input->post('c_number');
 			$data['c_person'] = $this->input->post('c_person');
 			$data['email'] = $this->input->post('email');
@@ -1383,9 +1389,7 @@ class Contact extends CI_Controller {
 
 					$send_to = $chase_mail['send_to'];
 					
-					$cc = $chase_mail['cc'];
-					
-					// $chase_mail = $send_to . ',' . $cc;
+					$cc = array($chase_mail['cc'], $data['remail']);
 
 					if($this->_send_mail('service_request',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
@@ -1402,7 +1406,6 @@ class Contact extends CI_Controller {
 //-----------------------------------------------------------
 	public function service_hardware(){
 		if(!$_POST){
-			//$this->_post_service_request();
 			$this->_get_service_hardware();
 		}else{
 			$this->_post_service_hardware();
@@ -1423,6 +1426,9 @@ class Contact extends CI_Controller {
 	private function _post_service_hardware(){
 		$this->load->library('form_validation');
 		$config = array(
+			array('field' =>'requested_by','label' =>'Requested By','rules' =>'trim|required'),
+			array('field' =>'r_number','label' =>'Requestor Number','rules' =>'trim|required'),
+			array('field' =>'remail','label' =>'Requestor Email Address','rules' =>'trim|required|valid_email'),
 			array('field' =>'c_number','label' =>'Contact Number','rules' =>'trim|required'),
 			array('field' =>'c_person','label' =>'ContactPerson','rules' =>'trim|required'),
 			array('field' =>'email','label' =>'Email Address','rules' =>'trim|required|valid_email'),
@@ -1442,6 +1448,10 @@ class Contact extends CI_Controller {
 		}
 		else
 		{
+			$data['requested_by'] = $this->input->post('requested_by');
+			$data['r_number'] = $this->input->post('r_number');
+			$data['remail'] = $this->input->post('remail');
+
 			$data['c_number'] = $this->input->post('c_number');
 			$data['c_person'] = $this->input->post('c_person');
 			$data['email'] = $this->input->post('email');
@@ -1511,9 +1521,7 @@ class Contact extends CI_Controller {
 
 					$send_to = $chase_mail['send_to'];
 					
-					$cc = $chase_mail['cc'];
-					
-					// $chase_mail = $send_to . ',' . $cc;
+					$cc = array($chase_mail['cc'], $data['remail']);
 
 					if($this->_send_mail('service_hardware',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
@@ -1530,7 +1538,6 @@ class Contact extends CI_Controller {
 //-----------------------------------------------------------
 	public function service_implementation(){
 		if(!$_POST){
-			//$this->_post_service_request();
 			$this->_get_service_implementation();
 		}else{
 			$this->_post_service_implementation();
@@ -1551,6 +1558,9 @@ class Contact extends CI_Controller {
 	private function _post_service_implementation(){
 		$this->load->library('form_validation');
 		$config = array(
+			array('field' =>'requested_by','label' =>'Requested By','rules' =>'trim|required'),
+			array('field' =>'r_number','label' =>'Requestor Number','rules' =>'trim|required'),
+			array('field' =>'remail','label' =>'Requestor Email Address','rules' =>'trim|required|valid_email'),
 			array('field' =>'c_number','label' =>'Contact Number','rules' =>'trim|required'),
 			array('field' =>'c_person','label' =>'ContactPerson','rules' =>'trim|required'),
 			array('field' =>'email','label' =>'Email Address','rules' =>'trim|required|valid_email'),
@@ -1570,6 +1580,11 @@ class Contact extends CI_Controller {
 		}
 		else
 		{
+
+			$data['requested_by'] = $this->input->post('requested_by');
+			$data['r_number'] = $this->input->post('r_number');
+			$data['remail'] = $this->input->post('remail');
+
 			$data['c_number'] = $this->input->post('c_number');
 			$data['c_person'] = $this->input->post('c_person');
 			$data['email'] = $this->input->post('email');
@@ -1639,9 +1654,7 @@ class Contact extends CI_Controller {
 
 					$send_to = $chase_mail['send_to'];
 					
-					$cc = $chase_mail['cc'];
-					
-					// $chase_mail = $send_to . ',' . $cc;
+					$cc = array($chase_mail['cc'], $data['remail']);
 
 					if($this->_send_mail('service_implementation',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
@@ -1659,7 +1672,6 @@ class Contact extends CI_Controller {
 //-----------------------------------------------------------
 	public function service_network(){
 		if(!$_POST){
-			//$this->_post_service_request();
 			$this->_get_service_network();
 		}else{
 			$this->_post_service_network();
@@ -1680,6 +1692,9 @@ class Contact extends CI_Controller {
 	private function _post_service_network(){
 		$this->load->library('form_validation');
 		$config = array(
+			array('field' =>'requested_by','label' =>'Requested By','rules' =>'trim|required'),
+			array('field' =>'r_number','label' =>'Requestor Number','rules' =>'trim|required'),
+			array('field' =>'remail','label' =>'Requestor Email Address','rules' =>'trim|required|valid_email'),
 			array('field' =>'c_number','label' =>'Contact Number','rules' =>'trim|required'),
 			array('field' =>'c_person','label' =>'ContactPerson','rules' =>'trim|required'),
 			array('field' =>'email','label' =>'Email Address','rules' =>'trim|required|valid_email'),
@@ -1699,6 +1714,10 @@ class Contact extends CI_Controller {
 		}
 		else
 		{
+			$data['requested_by'] = $this->input->post('requested_by');
+			$data['r_number'] = $this->input->post('r_number');
+			$data['remail'] = $this->input->post('remail');
+
 			$data['c_number'] = $this->input->post('c_number');
 			$data['c_person'] = $this->input->post('c_person');
 			$data['email'] = $this->input->post('email');
@@ -1768,9 +1787,7 @@ class Contact extends CI_Controller {
 
 					$send_to = $chase_mail['send_to'];
 					
-					$cc = $chase_mail['cc'];
-					
-					// $chase_mail = $send_to . ',' . $cc;
+					$cc = array($chase_mail['cc'], $data['remail']);
 
 					if($this->_send_mail('service_network',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
@@ -1788,7 +1805,6 @@ class Contact extends CI_Controller {
 //-----------------------------------------------------------
 	public function service_inhouse(){
 		if(!$_POST){
-			//$this->_post_service_request();
 			$this->_get_service_inhouse();
 		}else{
 			$this->_post_service_inhouse();
@@ -1809,7 +1825,9 @@ class Contact extends CI_Controller {
 	private function _post_service_inhouse(){
 		$this->load->library('form_validation');
 		$config = array(
-			array('field' =>'c_number','label' =>'Contact Number','rules' =>'trim|required'),
+			array('field' =>'requested_by','label' =>'Requested By','rules' =>'trim|required'),
+			array('field' =>'r_number','label' =>'Requestor Number','rules' =>'trim|required'),
+			array('field' =>'remail','label' =>'Requestor Email Address','rules' =>'trim|required|valid_email'),
 			array('field' =>'c_person','label' =>'ContactPerson','rules' =>'trim|required'),
 			array('field' =>'email','label' =>'Email Address','rules' =>'trim|required|valid_email'),
 			array('field' =>'company','label' =>'Company Name','rules' =>'trim|required'),
@@ -1828,6 +1846,10 @@ class Contact extends CI_Controller {
 		}
 		else
 		{
+			$data['requested_by'] = $this->input->post('requested_by');
+			$data['r_number'] = $this->input->post('r_number');
+			$data['remail'] = $this->input->post('remail');
+
 			$data['c_number'] = $this->input->post('c_number');
 			$data['c_person'] = $this->input->post('c_person');
 			$data['email'] = $this->input->post('email');
@@ -1897,9 +1919,7 @@ class Contact extends CI_Controller {
 
 					$send_to = $chase_mail['send_to'];
 					
-					$cc = $chase_mail['cc'];
-					
-					// $chase_mail = $send_to . ',' . $cc;
+					$cc = array($chase_mail['cc'], $data['remail']);
 
 					if($this->_send_mail('service_inhouse',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);

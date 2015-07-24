@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
-	<title>Chase Technologies Corporation</title>
+	<title>Chase Technologies Corporation </title>
 	<meta name="keywords" content="pos software,retail pos,retail software,windows pos software,inventory control,point of sale,cash register software,retail systems,pos distributor,point of purchase,touch screens,point-of-sale,pos systems,cash register,pos terminals,kiosk,parking,barcode,printer barcode printer, scanner, barcode scanner,pdt,chase,winpos,foodpos" />
     <meta name="description" content="Provider of point-of-sale (POS) software, cash register software, and retail solutions. CTC products and services are excellent choice to put you AHEAD in the race of technology." />
 	

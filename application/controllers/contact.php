@@ -12,6 +12,7 @@ class Contact extends CI_Controller {
 		$this->load->model('admin/Filters_model');
 		$this->load->model('admin/Blacklist_model');
 		$this->load->model('M_Logs');
+		$this->load->model('M_Request');
 
 		$this->default['styles'] = array('maincontent','products_contents','updates_newsletters','index_content',
 								'easySlides.default.min','small', 'jquery-ui-1.10.3.custom.min');
@@ -135,20 +136,35 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('clarification');
+
+			$rData['requesttype_id'] = $chase_mail['id'];
+		    $rData['contact_no'] = $data['c_number'];
+		    $rData['contact_person'] = $data['c_person'];
+		    $rData['email'] = $data['email'];
+		    $rData['company_name'] = $data['company'];
+		   	$rData['branch'] = $data['store'];
+		    $rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
+
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
-
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 			switch (ENVIRONMENT)
 			{
 				case 'development':
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('clarification');
+					
 
 					if($this->_send_mail('clarification',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
+						
+
 					}else{
 						$this->_fails();
 					}
@@ -164,7 +180,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('clarification',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -245,8 +261,19 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('quotation_followup');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -254,17 +281,15 @@ class Contact extends CI_Controller {
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('quotation_followup');
 
 					if($this->_send_mail('quotation_followup',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('quotation_followup');
 
 					$send_to = $chase_mail['send_to'];
 					
@@ -274,7 +299,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('quotation_followup',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -364,8 +389,19 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('request_demo');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -373,17 +409,15 @@ class Contact extends CI_Controller {
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('request_demo');
 
 					if($this->_send_mail('request_demo',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('request_demo');
 
 					$send_to = $chase_mail['send_to'];
 					
@@ -393,7 +427,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('request_demo',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -476,8 +510,19 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('return_call');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -485,17 +530,15 @@ class Contact extends CI_Controller {
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('return_call');
 
 					if($this->_send_mail('return_call',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('return_call');
 
 					$send_to = $chase_mail['send_to'];
 					
@@ -505,7 +548,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('return_call',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -585,8 +628,19 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('sales_inquiry');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -594,17 +648,15 @@ class Contact extends CI_Controller {
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('sales_inquiry');
 
 					if($this->_send_mail('sales_inquiry',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('sales_inquiry');
 
 					$send_to = $chase_mail['send_to'];
 					
@@ -614,7 +666,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('sales_inquiry',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -697,8 +749,19 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('stock_order_followup');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -706,16 +769,14 @@ class Contact extends CI_Controller {
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('stock_order_followup');
 					if($this->_send_mail('stock_order_followup',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('stock_order_followup');
 					
 					$send_to = $chase_mail['send_to'];
 					
@@ -725,7 +786,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('stock_order_followup',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -800,7 +861,19 @@ class Contact extends CI_Controller {
 				$data['company'],$data['store'],$data['address']);
 
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
+			$$chase_mail = $this->Subgroup_model->get_record_by_slug('enroll_esa');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
+			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -808,17 +881,15 @@ class Contact extends CI_Controller {
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('enroll_esa');
 
 					if($this->_send_mail('enroll_esa',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('enroll_esa');
 
 					$send_to = $chase_mail['send_to'];
 					
@@ -828,7 +899,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('enroll_esa',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -903,8 +974,19 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('esa_clarification');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -912,18 +994,14 @@ class Contact extends CI_Controller {
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('esa_clarification');
-
 					if($this->_send_mail('esa_clarification',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('esa_clarification');
-
 					$send_to = $chase_mail['send_to'];
 					
 					$cc = $chase_mail['cc'];
@@ -932,7 +1010,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('esa_clarification',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -1006,8 +1084,19 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('mall_hookup');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -1015,18 +1104,14 @@ class Contact extends CI_Controller {
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('mall_hookup');
-
 					if($this->_send_mail('mall_hookup',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('mall_hookup');
-
 					$send_to = $chase_mail['send_to'];
 					
 					$cc = $chase_mail['cc'];
@@ -1035,7 +1120,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('mall_hookup',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -1110,8 +1195,19 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('new_system');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -1119,18 +1215,14 @@ class Contact extends CI_Controller {
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('new_system');
-
 					if($this->_send_mail('new_system',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('new_system');
-
 					$send_to = $chase_mail['send_to'];
 					
 					$cc = $chase_mail['cc'];
@@ -1139,7 +1231,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('new_system',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -1231,8 +1323,19 @@ class Contact extends CI_Controller {
 			}
 			//end
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('service_followup');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -1240,18 +1343,14 @@ class Contact extends CI_Controller {
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('service_followup');
-
 					if($this->_send_mail('service_followup',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('service_followup');
-
 					$send_to = $chase_mail['send_to'];
 					
 					$cc = $chase_mail['cc'];
@@ -1260,7 +1359,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('service_followup',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -1366,8 +1465,19 @@ class Contact extends CI_Controller {
 			}
 			//end
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('service_request');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -1375,25 +1485,21 @@ class Contact extends CI_Controller {
 					print($reply_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('service_request');
-
 					if($this->_send_mail('service_request',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('service_request');
-
 					$send_to = $chase_mail['send_to'];
 					
 					$cc = array($chase_mail['cc'], $data['remail']);
 
 					if($this->_send_mail('service_request',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -1498,8 +1604,19 @@ class Contact extends CI_Controller {
 			}
 			//end
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('service_hardware');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -1507,25 +1624,21 @@ class Contact extends CI_Controller {
 					print($reply_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('service_hardware');
-
 					if($this->_send_mail('service_hardware',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('service_hardware');
-
 					$send_to = $chase_mail['send_to'];
 					
 					$cc = array($chase_mail['cc'], $data['remail']);
 
 					if($this->_send_mail('service_hardware',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -1631,8 +1744,19 @@ class Contact extends CI_Controller {
 			}
 			//end
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('service_implementation');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -1640,25 +1764,21 @@ class Contact extends CI_Controller {
 					print($reply_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('service_implementation');
-
 					if($this->_send_mail('service_implementation',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('service_implementation');
-
 					$send_to = $chase_mail['send_to'];
 					
 					$cc = array($chase_mail['cc'], $data['remail']);
 
 					if($this->_send_mail('service_implementation',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -1764,8 +1884,19 @@ class Contact extends CI_Controller {
 			}
 			//end
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('service_network');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -1773,25 +1904,21 @@ class Contact extends CI_Controller {
 					print($reply_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('service_network');
-
 					if($this->_send_mail('service_network',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('service_network');
-
 					$send_to = $chase_mail['send_to'];
 					
 					$cc = array($chase_mail['cc'], $data['remail']);
 
 					if($this->_send_mail('service_network',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -1896,8 +2023,19 @@ class Contact extends CI_Controller {
 			}
 			//end
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('service_inhouse');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -1905,25 +2043,21 @@ class Contact extends CI_Controller {
 					print($reply_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('service_inhouse');
-
 					if($this->_send_mail('service_inhouse',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('service_inhouse');
-
 					$send_to = $chase_mail['send_to'];
 					
 					$cc = array($chase_mail['cc'], $data['remail']);
 
 					if($this->_send_mail('service_inhouse',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -1998,8 +2132,19 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('software_bug');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -2007,18 +2152,14 @@ class Contact extends CI_Controller {
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('software_bug');
-
 					if($this->_send_mail('software_bug',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('software_bug');
-
 					$send_to = $chase_mail['send_to'];
 					
 					$cc = $chase_mail['cc'];
@@ -2027,7 +2168,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('software_bug',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -2102,8 +2243,19 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('software_enhancement');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -2111,18 +2263,14 @@ class Contact extends CI_Controller {
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('software_enhancement');
-
 					if($this->_send_mail('software_enhancement',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('software_enhancement');
-
 					$send_to = $chase_mail['send_to'];
 					
 					$cc = $chase_mail['cc'];
@@ -2131,7 +2279,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('software_enhancement',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -2143,85 +2291,85 @@ class Contact extends CI_Controller {
 	}
 //-----------------------------------------------------------
 
-	public function test(){
-		$this->load->library('form_validation');
-		$config = array(
-			array('field' =>'c_number','label' =>'Contact Number','rules' =>'trim|required'),
-			array('field' =>'c_person','label' =>'ContactPerson','rules' =>'trim|required'),
-			array('field' =>'email','label' =>'Email Address','rules' =>'trim|required|valid_email'),
-			array('field' =>'company','label' =>'Company Name','rules' =>'trim|required'),
-			array('field' =>'store','label' =>'Store Name','rules' =>'trim|required'),
-			array('field' =>'address','label' =>'Address','rules' =>'trim|required'),
-			array('field' =>'info','label' =>'Remarks','rules' =>'trim|required'),
-			array('field' =>'captcha','label' =>'Security','rules' =>'required|callback_captcha_check')
-		);
-		$this->form_validation->set_rules($config);
-		$this->form_validation->set_message('required', 'This field is required.');
-		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+	// public function test(){
+	// 	$this->load->library('form_validation');
+	// 	$config = array(
+	// 		array('field' =>'c_number','label' =>'Contact Number','rules' =>'trim|required'),
+	// 		array('field' =>'c_person','label' =>'ContactPerson','rules' =>'trim|required'),
+	// 		array('field' =>'email','label' =>'Email Address','rules' =>'trim|required|valid_email'),
+	// 		array('field' =>'company','label' =>'Company Name','rules' =>'trim|required'),
+	// 		array('field' =>'store','label' =>'Store Name','rules' =>'trim|required'),
+	// 		array('field' =>'address','label' =>'Address','rules' =>'trim|required'),
+	// 		array('field' =>'info','label' =>'Remarks','rules' =>'trim|required'),
+	// 		array('field' =>'captcha','label' =>'Security','rules' =>'required|callback_captcha_check')
+	// 	);
+	// 	$this->form_validation->set_rules($config);
+	// 	$this->form_validation->set_message('required', 'This field is required.');
+	// 	$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
 
-		if($this->form_validation->run() == FALSE){
-			$data = $this->default;
+	// 	if($this->form_validation->run() == FALSE){
+	// 		$data = $this->default;
 
-			$cap = $this->_generateCaptcha();
-			$data['captcha']= $cap['image'];
-			$data['word']= $cap['word'];
+	// 		$cap = $this->_generateCaptcha();
+	// 		$data['captcha']= $cap['image'];
+	// 		$data['word']= $cap['word'];
 
-			$data['childpage'] = 'contact/closed_sales';
-			$this->load->view('masterpage',$data);
-		}
-		else
-		{
-			$data['c_number'] = $this->input->post('c_number');
-			$data['c_person'] = $this->input->post('c_person');
-			$data['email'] = $this->input->post('email');
-			$data['company'] = $this->input->post('company');
-			$data['store'] = $this->input->post('store');
-			$data['address'] = $this->input->post('address');
-			//$data['info'] = $this->input->post('info');
-			$data['date_created'] = date_format(date_create(date("Y-m-d His")),'l, F j, Y H:i:s a');
-			$data['date_inquiry'] = date('l jS \of F Y h:i:s A');
+	// 		$data['childpage'] = 'contact/closed_sales';
+	// 		$this->load->view('masterpage',$data);
+	// 	}
+	// 	else
+	// 	{
+	// 		$data['c_number'] = $this->input->post('c_number');
+	// 		$data['c_person'] = $this->input->post('c_person');
+	// 		$data['email'] = $this->input->post('email');
+	// 		$data['company'] = $this->input->post('company');
+	// 		$data['store'] = $this->input->post('store');
+	// 		$data['address'] = $this->input->post('address');
+	// 		//$data['info'] = $this->input->post('info');
+	// 		$data['date_created'] = date_format(date_create(date("Y-m-d His")),'l, F j, Y H:i:s a');
+	// 		$data['date_inquiry'] = date('l jS \of F Y h:i:s A');
 			
-			$data['ip_address'] = $this->input->ip_address();
-			$data['info_type'] ="Closed Sales Request";
+	// 		$data['ip_address'] = $this->input->ip_address();
+	// 		$data['info_type'] ="Closed Sales Request";
 
-			$data['form1'] = array(
-				'desc' => 'Remarks',
-				'details' => $this->input->post('info')
-				);
+	// 		$data['form1'] = array(
+	// 			'desc' => 'Remarks',
+	// 			'details' => $this->input->post('info')
+	// 			);
 
-			//Save information details
-			$data['landline'] = "N/A";
-			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
-				$data['company'],$data['store'],$data['address']);
+	// 		//Save information details
+	// 		$data['landline'] = "N/A";
+	// 		$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
+	// 			$data['company'],$data['store'],$data['address']);
 
-			$reply_msg = $this->_checkDay('email_tpl_client',$data);
-			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+	// 		$reply_msg = $this->_checkDay('email_tpl_client',$data);
+	// 		$chase_msg = $this->_checkDay('email_tpl_chase',$data);
 
-			$chase_mail = $this->Subgroup_model->get_record_by_slug('closed_sales');
-			//echo realpath('./captcha/');
+	// 		$chase_mail = $this->Subgroup_model->get_record_by_slug('closed_sales');
+	// 		//echo realpath('./captcha/');
 			
 			
 			
-			debug($_FILES);
+	// 		debug($_FILES);
 
 			
 
-			// $this->load->library('upload');
-   //      	$this->upload->initialize(array(
-   //      		"upload_path" => realpath('./captcha/'), // server directory
-   //      		"allowed_types" => "pdf|gif|jpg|png|txt|xls|xlsx|doc|docx|jpeg|bmp|csv",
-   //      		"xss_clean" => TRUE));
+	// 		// $this->load->library('upload');
+ //   //      	$this->upload->initialize(array(
+ //   //      		"upload_path" => realpath('./captcha/'), // server directory
+ //   //      		"allowed_types" => "pdf|gif|jpg|png|txt|xls|xlsx|doc|docx|jpeg|bmp|csv",
+ //   //      		"xss_clean" => TRUE));
 
-			// if($this->upload->do_multi_upload('userfile')){
-			// 	//Code to run upon successful upload.
-			// 	$files = $this->upload->get_multi_upload_data();
-			// 	debug($files);
-	  //       }
+	// 		// if($this->upload->do_multi_upload('userfile')){
+	// 		// 	//Code to run upon successful upload.
+	// 		// 	$files = $this->upload->get_multi_upload_data();
+	// 		// 	debug($files);
+	//   //       }
 
-	  //       debug($this->upload->display_errors());
+	//   //       debug($this->upload->display_errors());
 
-		}
-	}
+	// 	}
+	// }
 
 	public function closed_sales(){
 		if(!$_POST){
@@ -2287,8 +2435,19 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('closed_sales');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -2296,18 +2455,14 @@ class Contact extends CI_Controller {
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('closed_sales');
-
 					if($this->_send_mail('closed_sales',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('closed_sales');
-
 					$send_to = $chase_mail['send_to'];
 					
 					$cc = $chase_mail['cc'];
@@ -2316,7 +2471,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('closed_sales',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -2391,8 +2546,19 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('followup_schedule');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -2400,18 +2566,14 @@ class Contact extends CI_Controller {
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('followup_schedule');
-
 					if($this->_send_mail('followup_schedule',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('followup_schedule');
-
 					$send_to = $chase_mail['send_to'];
 					
 					$cc = $chase_mail['cc'];
@@ -2420,7 +2582,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('followup_schedule',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -2494,8 +2656,19 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('request_delivery');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -2503,18 +2676,14 @@ class Contact extends CI_Controller {
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('request_delivery');
-
 					if($this->_send_mail('request_delivery',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('request_delivery');
-
 					$send_to = $chase_mail['send_to'];
 					
 					$cc = $chase_mail['cc'];
@@ -2523,7 +2692,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('request_delivery',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -2614,8 +2783,19 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
-			$reply_msg = $this->_checkDay('email_tpl_client_delivery',$data);
-			$chase_msg = $this->_checkDay('email_tpl_chase_delivery',$data);
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('vehicle_request');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
+			$reply_msg = $this->_checkDay('email_tpl_client',$data);
+			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -2623,18 +2803,14 @@ class Contact extends CI_Controller {
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('vehicle_request');
-
 					if($this->_send_mail('vehicle_request',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('vehicle_request');
-
 					$send_to = $chase_mail['send_to'];
 					
 					$cc = $chase_mail['cc'];
@@ -2643,7 +2819,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('vehicle_request',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -2717,8 +2893,19 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('register_pos');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -2726,18 +2913,14 @@ class Contact extends CI_Controller {
 					print($reply_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('register_pos');
-
 					if($this->_send_mail('register_pos',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('register_pos');
-
 					$send_to = $chase_mail['send_to'];
 					
 					$cc = $chase_mail['cc'];
@@ -2746,7 +2929,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('register_pos',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -2820,27 +3003,33 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('request_brochure');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
-
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 			switch (ENVIRONMENT)
 			{
 				case 'development':
 					print($reply_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('request_brochure');
-
 					if($this->_send_mail('request_brochure',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('request_brochure');
-
 					$send_to = $chase_mail['send_to'];
 					
 					$cc = $chase_mail['cc'];
@@ -2849,7 +3038,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('request_brochure',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -2923,8 +3112,19 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('request_training');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -2932,18 +3132,14 @@ class Contact extends CI_Controller {
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('request_training');
-
 					if($this->_send_mail('request_training',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('request_training');
-
 					$send_to = $chase_mail['send_to'];
 					
 					$cc = $chase_mail['cc'];
@@ -2952,7 +3148,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('request_training',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -3017,13 +3213,19 @@ class Contact extends CI_Controller {
 			$data['ip_address'] = $this->input->ip_address();
 			$data['info_type'] ="Customer Assistance Request";
 
-			// //Save information details
-			// $data['landline'] = "N/A";
-			// $this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
-			// 	$data['company'],$data['store'],$data['address']);
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('customer_assistance');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
 
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			//$chase_mail = $this->Subgroup_model->get_record_by_slug('enroll_esa');
 
@@ -3033,19 +3235,17 @@ class Contact extends CI_Controller {
 						print($reply_msg);
 						break;
 					case 'testing':
-						$chase_mail = $this->Subgroup_model->get_record_by_slug('customer_assistance');
 						if($this->_send_mail('customer_assistance', $data['info_type'],$send_to,$data['email'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 							$this->M_Logs->save($chase_mail['id']);
-							$this->_success();
+							$this->_success($data['request_id']);
 						}else{
 							$this->_fails();
 						}
 						break;
 					case 'production':
-						$chase_mail = $this->Subgroup_model->get_record_by_slug('customer_assistance');
 						if($this->_send_mail('customer_assistance', $data['info_type'],$send_to,$data['email'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 							$this->M_Logs->save($chase_mail['id']);
-							$this->_success();
+							$this->_success($data['request_id']);
 						}else{
 							$this->_fails();
 						}
@@ -3482,8 +3682,9 @@ class Contact extends CI_Controller {
 		$data['childpage'] = 'contact/fail';
 		$this->load->view('masterpage',$data);
 	}
-	private function _success(){
+	private function _success($request_id){
 		$data = $this->default;
+		$data['request_id'] = $request_id;
 		$data['childpage'] = 'contact/success';
 		$this->load->view('masterpage',$data);
 	}
@@ -3565,8 +3766,19 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('bir_followup');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -3574,21 +3786,19 @@ class Contact extends CI_Controller {
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('bir_followup');
 
 					if($this->_send_mail('bir_followup',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('bir_followup');
 
 					if($this->_send_mail('bir_followup',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -3670,8 +3880,19 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('man_power');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -3679,21 +3900,19 @@ class Contact extends CI_Controller {
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('man_power');
 
 					if($this->_send_mail('man_power', $data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('man_power');
 
 					if($this->_send_mail('man_power', $data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -3757,8 +3976,20 @@ class Contact extends CI_Controller {
 			$data['qty'] = $this->input->post('qty');
 			$data['remarks'] = $this->input->post('remarks');
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('purchase_request');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
+
 			$reply_msg = $this->_checkDay('purchase_tpl_client',$data);
 			$chase_msg = $this->_checkDay('purchase_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -3766,21 +3997,19 @@ class Contact extends CI_Controller {
 					print($reply_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('purchase_request');
 
 					if($this->_send_mail('purchase_request',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['client'],'')){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('purchase_request');
 
 					if($this->_send_mail('purchase_request',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['client'],'')){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -3862,8 +4091,19 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
 				$data['company'],$data['store'],$data['address']);
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('messenger_request');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -3871,17 +4111,15 @@ class Contact extends CI_Controller {
 					print($chase_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('messenger_request');
 
 					if($this->_send_mail('messenger_request',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
 						$this->M_Logs->save($purpose['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('messenger_request');
 
 					$send_to = $chase_mail['send_to'];
 					
@@ -3891,7 +4129,7 @@ class Contact extends CI_Controller {
 
 					if($this->_send_mail('messenger_request',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
 						$this->M_Logs->save($purpose['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -3951,7 +4189,7 @@ class Contact extends CI_Controller {
 		{
 			$data['company'] = $this->input->post('company');
 			$data['store'] = $this->input->post('store');
-			$data['so'] = $this->input->post('so');
+			$data['salesorder'] = $this->input->post('so');
 			$data['payment_for'] = $this->input->post('payment_for');
 			$data['type'] = $this->input->post('type');
 			$data['service_by'] = $this->input->post('service_by');
@@ -3967,8 +4205,19 @@ class Contact extends CI_Controller {
 			$this->Clients_model->add('','','',$data['email'],
 				$data['company'],$data['store'],'');
 
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('billing_request');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = '';
+			$rData['contact_person'] = $data['requestor'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = '';
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
 			$reply_msg = $this->_checkDay('email_tpl_client',$data);
 			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
 
 			switch (ENVIRONMENT)
 			{
@@ -3976,21 +4225,19 @@ class Contact extends CI_Controller {
 					print($reply_msg);
 					break;
 				case 'testing':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('billing_request');
 
 					if($this->_send_mail('billing_request', $data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],'')){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
 					break;
 				case 'production':
-					$chase_mail = $this->Subgroup_model->get_record_by_slug('billing_request');
 
 					if($this->_send_mail('billing_request', $data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],'')){
 						$this->M_Logs->save($chase_mail['id']);
-						$this->_success();
+						$this->_success($data['request_id']);
 					}else{
 						$this->_fails();
 					}
@@ -4001,7 +4248,264 @@ class Contact extends CI_Controller {
 		}
 	}
 
+//--------------------------------------------------------------------------------
+	public function pricerequest(){
+		if(!$_POST){
+			$this->_get_pricerequest();
+		}else{
+			$this->_post_pricerequest();
+		}
+	}
 
+	private function _get_pricerequest(){
+		$data = $this->default;
+
+		$cap = $this->_generateCaptcha();
+		$data['captcha']= $cap['image'];
+		$data['word']= $cap['word'];
+
+		$data['childpage'] = 'contact/pricerequest';
+		$this->load->view('masterpage',$data);
+	}
+
+	private function _post_pricerequest(){
+
+		$this->load->library('form_validation');
+		$config = array(
+			array('field' =>'c_number','label' =>'Contact Number','rules' =>'trim|required'),
+			array('field' =>'c_person','label' =>'ContactPerson','rules' =>'trim|required'),
+			array('field' =>'email','label' =>'Email Address','rules' =>'trim|required|valid_email'),
+			array('field' =>'company','label' =>'Company Name','rules' =>'trim|required'),
+			array('field' =>'store','label' =>'Store Name','rules' =>'trim|required'),
+			array('field' =>'address','label' =>'Address','rules' =>'trim|required'),
+			array('field' =>'info','label' =>'Remarks','rules' =>'trim|required'),
+			array('field' =>'captcha','label' =>'Security','rules' =>'required|callback_captcha_check')
+		);
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_message('required', 'This field is required.');
+		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+
+		if($this->form_validation->run() == FALSE){
+			$this->_get_pricerequest();
+		}
+		else
+		{
+			$data['c_number'] = $this->input->post('c_number');
+			$data['c_person'] = $this->input->post('c_person');
+			$data['email'] = $this->input->post('email');
+			$data['company'] = $this->input->post('company');
+			$data['store'] = $this->input->post('store');
+			$data['address'] = $this->input->post('address');
+			//$data['info'] = $this->input->post('info');
+			$data['date_created'] = date_format(date_create(date("Y-m-d His")),'l, F j, Y H:i:s a');
+			$data['date_inquiry'] = date('l jS \of F Y h:i:s A');
+			
+			$data['ip_address'] = $this->input->ip_address();
+			$data['info_type'] ="Price Request";
+
+			$data['form1'] = array(
+				'desc' => 'Product Information',
+				'details' => $this->input->post('info')
+				);
+
+			$data['form2'] = array(
+				'desc' => 'Other Information',
+				'details' => $this->input->post('problem')
+				);
+			//Save information details
+			$data['landline'] = "N/A";
+			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
+				$data['company'],$data['store'],$data['address']);
+
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('pricerequest');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
+			$reply_msg = $this->_checkDay('email_tpl_client',$data);
+			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
+
+			switch (ENVIRONMENT)
+			{
+				case 'development':
+					print($chase_msg);
+					break;
+				case 'testing':
+
+					if($this->_send_mail('pricerequest',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
+						$this->M_Logs->save($chase_mail['id']);
+						$this->_success($data['request_id']);
+					}else{
+						$this->_fails();
+					}
+					break;
+				case 'production':
+
+					$send_to = $chase_mail['send_to'];
+					
+					$cc = $chase_mail['cc'];
+					
+					// $chase_mail = $send_to . ',' . $cc;
+
+					if($this->_send_mail('pricerequest',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
+						$this->M_Logs->save($chase_mail['id']);
+						$this->_success($data['request_id']);
+					}else{
+						$this->_fails();
+					}
+					break;
+				default:
+					exit('The application environment is not set correctly.');
+			}
+		}
+	}
+
+	//-----------------------------------------------------------
+	public function civilworks(){
+		if(!$_POST){
+			$this->_get_civilworks();
+		}else{
+			$this->_post_civilworks();
+		}
+	}
+
+
+	private function _get_civilworks(){
+		$data = $this->default;
+
+		$cap = $this->_generateCaptcha();
+		$data['captcha']= $cap['image'];
+		$data['word']= $cap['word'];
+
+		$data['childpage'] = 'contact/civilworks';
+		$this->load->view('masterpage',$data);
+	}
+
+	private function _post_civilworks(){
+		$this->load->library('form_validation');
+		$config = array(
+			array('field' =>'requested_by','label' =>'Requested By','rules' =>'trim|required'),
+			array('field' =>'r_number','label' =>'Requestor Number','rules' =>'trim|required'),
+			array('field' =>'remail','label' =>'Requestor Email Address','rules' =>'trim|required|valid_email'),
+			array('field' =>'c_number','label' =>'Contact Number','rules' =>'trim|required'),
+			array('field' =>'c_person','label' =>'ContactPerson','rules' =>'trim|required'),
+			array('field' =>'email','label' =>'Email Address','rules' =>'trim|required|valid_email'),
+			array('field' =>'company','label' =>'Company Name','rules' =>'trim|required'),
+			array('field' =>'store','label' =>'Store Name','rules' =>'trim|required'),
+			array('field' =>'address','label' =>'Address','rules' =>'trim|required'),
+			array('field' =>'tools','label' =>'Tools','rules' =>'trim|required'),
+			array('field' =>'scope','label' =>'Job Scope','rules' =>'trim|required'),
+			array('field' =>'captcha','label' =>'Security','rules' =>'required|callback_captcha_check')
+		);
+		$this->form_validation->set_rules($config);
+		$this->form_validation->set_message('required', 'This field is required.');
+		$this->form_validation->set_error_delimiters('<span class="error">', '</span>');
+
+		if($this->form_validation->run() == FALSE){
+			$this->_get_civilworks();
+		}
+		else
+		{
+			$data['requested_by'] = $this->input->post('requested_by');
+			$data['r_number'] = $this->input->post('r_number');
+			$data['remail'] = $this->input->post('remail');
+
+			$data['c_number'] = $this->input->post('c_number');
+			$data['c_person'] = $this->input->post('c_person');
+			$data['email'] = $this->input->post('email');
+			$data['company'] = $this->input->post('company');
+			$data['store'] = $this->input->post('store');
+			$data['address'] = $this->input->post('address');
+			//$data['info'] = $this->input->post('info');
+			//$data['problem'] = $this->input->post('problem');
+			$data['date_created'] = date_format(date_create(date("Y-m-d His")),'l, F j, Y H:i:s a');
+			$data['date_inquiry'] = date('l jS \of F Y h:i:s A');
+			
+			$data['ip_address'] = $this->input->ip_address();
+			$data['info_type'] ="Service Request (Civil Works)";
+
+			$data['form1'] = array(
+				'desc' => 'Tools/Equipment Requirement',
+				'details' => $this->input->post('tools')
+				);
+
+			$data['form2'] = array(
+				'desc' => 'Job Scope',
+				'details' => $this->input->post('scope')
+				);
+
+			//save for autofill-in fields
+			$data['landline'] = "N/A";
+			$this->Clients_model->add($data['c_number'],$data['landline'],$data['c_person'],$data['email'],
+			$data['company'],$data['store'],$data['address']);
+
+			//check if have pending message
+			$pendings = $this->Filters_model->search($data['c_number']);
+			if(count($pendings)>0){
+				$data['notes'] = $pendings;
+				foreach ($pendings as $row) {
+					$f_id = $row['filter_id'];
+					$data1['tries']  = 0;
+					$data1['status'] = 0;
+					$data1['tries'] = $row['tries'] + 1;
+					if($row['retry'] == $data1['tries']){
+						$data1['status'] = 1;
+					}
+					$this->Filters_model->update_filter($f_id,$data1);
+				}
+			}
+			//end
+
+			$chase_mail = $this->Subgroup_model->get_record_by_slug('civilworks');
+			$rData['requesttype_id'] = $chase_mail['id'];
+			$rData['contact_no'] = $data['c_number'];
+			$rData['contact_person'] = $data['c_person'];
+			$rData['email'] = $data['email'];
+			$rData['company_name'] = $data['company'];
+			$rData['branch'] = $data['store'];
+			$rData['address'] = $data['address'];
+			$data['request_id'] = $this->M_Request->newRequest($rData);
+
+			$reply_msg = $this->_checkDay('email_tpl_client',$data);
+			$chase_msg = $this->_checkDay('email_tpl_chase',$data);
+			$this->M_Request->updateDetails($data['request_id'],$chase_msg);
+
+			switch (ENVIRONMENT)
+			{
+				case 'development':
+					print($reply_msg);
+					break;
+				case 'testing':
+					if($this->_send_mail('civilworks',$data['info_type'],$chase_mail['send_to'],$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'])){
+						$this->M_Logs->save($chase_mail['id']);
+						$this->_success($data['request_id']);
+					}else{
+						$this->_fails();
+					}
+					break;
+				case 'production':
+					$send_to = $chase_mail['send_to'];
+					
+					$cc = array($chase_mail['cc'], $data['remail']);
+
+					if($this->_send_mail('civilworks',$data['info_type'],$send_to,$data['email'],$chase_msg,$reply_msg,$data['company'],$data['c_number'],$cc)){
+						$this->M_Logs->save($chase_mail['id']);
+						$this->_success($data['request_id']);
+					}else{
+						$this->_fails();
+					}
+					break;
+				default:
+					exit('The application environment is not set correctly.');
+			}
+		}
+	}
 }
 
 /* End of file contact.php */

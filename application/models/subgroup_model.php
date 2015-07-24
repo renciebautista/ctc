@@ -17,6 +17,26 @@ class Subgroup_model extends CI_Model {
 		return $this->db->get($this->table)->result_array();
 	}
 
+	public function get_sub_group_by_filters($list){
+		if(count($list) > 0){
+			$this->db->where_in('id',$list);
+			$this->db->where('active',1);
+			$this->db->where('parent_id',0);
+			$this->db->order_by('sub_group','asc');
+			return $this->db->get($this->table)->result_array();
+		}else{
+			return array();
+		}
+		
+	}
+
+	public function getAll(){
+		$this->db->where('active',1);
+		$this->db->where('parent_id',0);
+		$this->db->order_by('sub_group','asc');
+		return $this->db->get($this->table)->result_array();
+	}
+
 	/**
 	 * check if have parent group
 	 * @param int 

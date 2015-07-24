@@ -32,6 +32,7 @@
 			<td><?php echo (($row['active'] == 'ON')? 'Active':'Suspended');?></td>
 			<td style="width:18%; text-align:center;">
 				<a class="btn btn-small btn-info"href="<?php echo base_url('admin/users/edit/'.$row['id']);?>"><i class="icon-edit icon-white"></i> Edit</a>
+				<a class="btn btn-small btn-info"href="<?php echo base_url('admin/users/filter/'.$row['id']);?>"><i class="icon-edit icon-white"></i> Add Filter</a>
 			</td>
 		</tr>
 		<?php endforeach; ?>

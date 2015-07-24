@@ -22,15 +22,7 @@ class Holidays extends MY_Controller {
 	}
 //-----------------------------------------------------------------------
 	public function add(){
-		if(!$this->allow_role(3)){
-			$this->_not_authorized();
-		}else{
-			if(!$_POST){
-				$this->_get_add();
-			}else{
-				$this->_post_add();
-			}
-		}
+		var_dump(expression)
 	}
 
 	private function _get_add(){

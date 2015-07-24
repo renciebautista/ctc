@@ -43,7 +43,7 @@
 	$arr= array('a','e','i','o','u');
 	if (in_array($itype,$arr)){$strx = "An ";}
 ?>
-<p><?php echo $strx.$info_type ; ?> was submitted in our site with this following information. Kindly process this request on <b style="color: #A70000;">
+<p><?php echo $strx.$info_type ; ?> with a <b>Request # <?php echo str_pad($request_id,10,'0',STR_PAD_LEFT);?></b> was submitted in our site with this following information and Request # . Kindly process this request on <b style="color: #A70000;">
 <?php
 	if(isset($response_time)){
 		echo date_format(date_create($response_time),'l, F j, Y') . ' from 09:00 to 12:00 in 3 working hours.</p>';

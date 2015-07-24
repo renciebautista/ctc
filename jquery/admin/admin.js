@@ -25,6 +25,11 @@ $(document).ready(function(){
 		});
 	});
 
+	$('.datefilter').each(function () {
+    	$(this).mask("99/99/9999");
+    	$(this).datepicker();
+	});
+
     if(('#notes').length){
     	$('#notes').wysihtml5();
     	$('#retry,#contact').numericonly();

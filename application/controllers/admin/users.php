@@ -5,6 +5,8 @@ class Users extends MY_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('admin/Users_model');
+		$this->load->model('Subgroup_model');
+		$this->load->model('M_Filters');
 	}
 	
 	public function index(){
@@ -99,6 +101,35 @@ class Users extends MY_Controller {
 						redirect('admin/users/edit/'.$uid);
 					}
 				}
+			}
+		}
+	}
+
+	public function filter($id){
+		if(!$this->allow_role(1)){
+			$this->_not_authorized();
+		}else{
+			if((is_null($id)) || (!$this->Users_model->id_exist($id))){
+				$this->_not_found();
+			}else{
+				if(!$_POST){
+					$data['user_id'] = $id;
+					$data['title'] = 'Add User Report Filters';
+					$data['requesttypes'] = $this->Subgroup_model->getAll();
+					$data['selected'] = $this->M_Filters->getFilters($id);
+					$data['view'] = 'user_filters';
+					$this->load->view('admin/template',$data);
+				}else{
+					//debug($_POST);
+					$user_id = $this->input->post('user_id');
+					$array = $this->input->post('filter');
+
+					$this->M_Filters->updateFilters($user_id,$array);
+					$this->session->set_flashdata('message', '<div class="alert alert-success"><strong>User filters is successfully updated.</strong></div>');
+					redirect('admin/users');
+				}
+
+				
 			}
 		}
 	}

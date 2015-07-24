@@ -29,6 +29,15 @@
                 <div class="container">
                     <div class="nav-collapse collapse">
                         <ul class="nav">
+                             <?php if((ROLE_ID == 4) || (ROLE_ID == 5)): ?>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="<?php echo base_url('admin/requestreport'); ?>">Request Reports</a></li>
+                                </ul>
+                            </li>
+                            <?php endif; ?>
+                            <?php if((ROLE_ID == 2) || (ROLE_ID == 3) || (ROLE_ID == 1)): ?>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">File Maintenance <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
@@ -50,8 +59,17 @@
                                 <?php endif; ?>
                                 </ul>
                             </li>
+                             <?php endif; ?>
                          <?php if(ROLE_ID == 1): ?>
-                            <li><a href="<?php echo base_url('admin/users'); ?>">Users</a></li>
+                             <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Users <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="<?php echo base_url('admin/users'); ?>">Users</a></li>
+                                    <li><a href="<?php echo base_url('admin/reportfilter'); ?>">Report Filters</a></li>
+                                </ul>
+                            </li>
+
+                            
                          <?php endif; ?>
                             <!-- <li><a href="#contact">Settings</a></li> -->
                         <?php if(ROLE_ID == 2): ?>

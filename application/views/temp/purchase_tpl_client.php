@@ -36,7 +36,7 @@
 												<td class="info">
 													<p><b>Greetings from Chase Technologies Corporation!</b></p><br>
 
-<p>This is to confirm the receipt of your <?php echo $info_type ; ?>. Rest assured that this request will be forwarded to the proper concerning department. Meanwhile, please do expect a call from one of our technical representatives to further discuss your reported concern's on <b>
+<p>This is to confirm the receipt of your <?php echo $info_type ; ?> with a <b>Request # <?php echo str_pad($request_id,10,'0',STR_PAD_LEFT);?></b>. Rest assured that this request will be forwarded to the proper concerning department. Meanwhile, please do expect a call from one of our technical representatives to further discuss your reported concern's on <b>
 <?php
 	if(isset($response_time)){
 		echo date_format(date_create($response_time),'l, F j, Y') . ' from 09:00 to 12:00 in 3 working hours.</p>';

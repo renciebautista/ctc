@@ -24,7 +24,9 @@
 						<td><?php echo $row['username'];?></td>
 						<td><?php echo $row['roles'];?></td>
 						<td style="text-align:center;">
-							<a onclick="return confirm('Do you really want to delete?');" href="<?php echo base_url();?>" class="delete">EDIT </a><a onclick="return confirm('Do you really want to delete?');" href="<?php echo base_url();?>" class="delete">DELETE </a></td>
+							<a onclick="return confirm('Do you really want to delete?');" href="<?php echo base_url();?>" class="delete">EDIT </a>
+							<a onclick="return confirm('Do you really want to delete?');" href="<?php echo base_url();?>" class="delete">DELETE </a>
+						</td>
 					  </tr>	
 				<?}
 		  }

@@ -47,10 +47,10 @@ class M_Request extends CI_Model{
             $filters_array = implode(",", $filters);
             $strstatus='';
             if($status > 0){
-                $strstatus = 'AND requests.status_id = '.$status;
+                $strstatus .= ' AND requests.status_id = '.$status;
             }
             if($type > 0){
-                $strstatus = 'AND requests.requesttype_id = '.$type;
+                $strstatus .= ' AND requests.requesttype_id = '.$type;
             }
             $query = sprintf("SELECT requests.id,status_desc,sub_group,company_name,branch,created_at
                 FROM (requests) 
@@ -60,11 +60,14 @@ class M_Request extends CI_Model{
                 AND (company_name LIKE '%%%s%%' OR branch LIKE '%%%s%%' OR requests.id LIKE '%%%s%%')
                 AND date(created_at) >= '%s'
                 AND date(created_at) <= '%s'
-                %s ORDER BY updated_at DESC", $filters_array,mysql_real_escape_string($search),
+                %s ORDER BY updated_at DESC", 
+                $filters_array,
+                mysql_real_escape_string($search),
                 mysql_real_escape_string($search),
                 mysql_real_escape_string($search),
                 date("Y-m-d", strtotime($from)),
-                date("Y-m-d", strtotime($to)),$strstatus);
+                date("Y-m-d", strtotime($to)),
+                $strstatus);
             return $this->db->query($query)->result_array();
         }else{
              return array();

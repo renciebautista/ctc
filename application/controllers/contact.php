@@ -3637,7 +3637,7 @@ class Contact extends CI_Controller {
 
 		if(!$this->email->send())
 		{
-			if($files){
+			if(isset($files)){
 				$this->load->helper("file");
 				foreach ($files as $item) {
 					@unlink($item['full_path']);
@@ -3661,7 +3661,7 @@ class Contact extends CI_Controller {
 				}
 			}
 			
-			if($files){
+			if(isset($files)){
 				$this->load->helper("file");
 				foreach ($files as $item) {
 					@unlink($item['file']);
@@ -3978,12 +3978,12 @@ class Contact extends CI_Controller {
 
 			$chase_mail = $this->Subgroup_model->get_record_by_slug('purchase_request');
 			$rData['requesttype_id'] = $chase_mail['id'];
-			$rData['contact_no'] = $data['c_number'];
-			$rData['contact_person'] = $data['c_person'];
+			$rData['contact_no'] = '';
+			$rData['contact_person'] = $data['requestor'];
 			$rData['email'] = $data['email'];
-			$rData['company_name'] = $data['company'];
-			$rData['branch'] = $data['store'];
-			$rData['address'] = $data['address'];
+			$rData['company_name'] = $data['client'];
+			$rData['branch'] = '';
+			$rData['address'] = '';
 			$data['request_id'] = $this->M_Request->newRequest($rData);
 
 

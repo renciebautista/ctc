@@ -80,7 +80,7 @@
         	<div class="comment_top">
         		<div>
 				  	<div class="comment_time">
-			      		<div><?php echo distance_of_time_in_words(strtotime($thread['created_at']),strtotime(date('Y-m-d H:i:s'))); ?> ago</div>
+			      		<div> <?php echo date_format(date_create($thread['created_at']),'m/d/Y H:s');?> </div>
 					</div>
 				</div>
 				<div class="comment_status">
@@ -88,14 +88,20 @@
 						$class ="";
 						switch ($thread['status_id']) {
 							case '1':
-								$class ="label label-warning";
+								$class ="label label-important";
 								break;
 							case '2':
 								$class ="label label-success";
 								break;
 							case '3':
-								$class ="label";
+								$class ="label ";
 								break;
+                            case '4':
+                                $class ="label label-info";
+                                break;
+                            case '5':
+                                $class ="label label-warning";
+                                break;
 							default:
 								# code...
 								break;

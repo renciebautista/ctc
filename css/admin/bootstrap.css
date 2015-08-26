@@ -289,7 +289,7 @@ a:focus {
 .navbar-static-top .container,
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
-  width: 1200px;
+  width: 1000px;
 }
 
 .span12 {
@@ -4560,7 +4560,7 @@ input[type="submit"].btn.btn-mini {
 .navbar-static-top .container,
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
-  width: 1200px;
+  width: 1000px;
 }
 
 .navbar-fixed-top {

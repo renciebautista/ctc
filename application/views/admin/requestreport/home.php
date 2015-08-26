@@ -62,7 +62,7 @@
 			<td><?php echo $row['status_desc'];?></td>
 			<td><?php echo date_format(date_create($row['created_at']),'m/d/Y H:s');?></td>
 			<td style="width:18%; text-align:center;">
-				<a class="btn btn-small btn-info"href="<?php echo base_url('admin/requestreport/edit/'.$row['id']);?>"><i class="icon-edit icon-white"></i> View</a>
+				<a target="_blank" class="btn btn-small btn-info"href="<?php echo base_url('admin/requestreport/edit/'.$row['id']);?>"><i class="icon-edit icon-white"></i> View</a>
 			</td>
 		</tr>
 		<?php endforeach; ?>
